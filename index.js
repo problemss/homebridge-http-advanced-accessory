@@ -96,6 +96,7 @@ function HttpAdvancedAccessory(log, config) {
 	self.auth = {
 		username: config.username || "",
 		password: config.password || "",
+		bearer: config.bearerToken || "",
 		immediately: true
 	};
 
@@ -138,7 +139,7 @@ HttpAdvancedAccessory.prototype = {
 					sendImmediately: this.auth.immediately
 				},
 				headers: {
-					Authorization: "Basic " + new Buffer(this.auth.username + ":" + this.auth.password).toString("base64")
+					Authorization: this.auth.bearer ? "Bearer" + this.auth.bearer : "Basic " + new Buffer(this.auth.username + ":" + this.auth.password).toString("base64")
 				}
 			},
 			function(error, response, body) {
